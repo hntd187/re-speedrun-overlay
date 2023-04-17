@@ -3,6 +3,7 @@ project(re_overlay)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_GENERATOR_PLATFORM x64)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_library(re_overlay SHARED)
 target_sources(re_overlay PRIVATE
         src/Speedrun.cpp

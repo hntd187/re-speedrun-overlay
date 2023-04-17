@@ -17,6 +17,9 @@ Currently, the plugin provides
 1. Install the [reframework](https://github.com/praydog/REFramework#installation)
 2. Go to the [releases](https://github.com/hntd187/re-speedrun-overlay/releases) page and download a release of the plugin and place the file in your `<GAME DIRECTORY>/reframework/plugins/`
 
+### Additional Credits
+Additional code and credit to Preydog and Cursey, some example code was taken from their work in [kananlib](https://github.com/cursey/kananlib/) and 
+reframework's plugin [example](https://github.com/praydog/REFramework/tree/master/examples/example_plugin).
 
 ### Screenshots
 

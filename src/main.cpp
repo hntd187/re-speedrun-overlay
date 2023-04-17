@@ -7,7 +7,7 @@
 #include "rendering/d3d12.hpp"
 #include <reframework/API.hpp>
 
-Speedrun spdrun = Speedrun();
+Speedrun spdrun{};
 HWND g_wnd{};
 bool g_initialized{false};
 

@@ -136,10 +136,10 @@ void Speedrun::draw_money() {
     const auto ptas = inventory_manager->get_field<uint32_t>("<CurrPTAS>k__BackingField");
     const auto spinels = ingame_shop_manager->get_field<uint32_t>("<CurrSpinelCount>k__BackingField");
     if (ptas != nullptr) {
-        ImGui::LabelText("Current Pitas (Yum)", "%u", *ptas);
+        ImGui::LabelText("Current Pesetas", "%u", *ptas);
     }
     if (spinels != nullptr) {
-        ImGui::LabelText("Current Spinals", "%u", *spinels);
+        ImGui::LabelText("Current Spinels", "%u", *spinels);
     }
 }
 
@@ -151,7 +151,7 @@ void Speedrun::draw_kills() {
         auto kill_stats = (*ongoing_stats)->call<API::ManagedObject*>("get_Kill()", ctx, *ongoing_stats);
         if (kill_stats != nullptr) {
             const auto kills = kill_stats->call<uint32_t>("get_Count()", ctx, kill_stats);
-            ImGui::LabelText("Killz", "%i", kills);
+            ImGui::LabelText("Kills", "%i", kills);
         }
     }
 }
@@ -198,6 +198,9 @@ void Speedrun::draw_enemies(const int num_to_display, const bool boss_only) {
     const auto character_manager = API::get()->get_managed_singleton(game_namespace("CharacterManager"));
     if (character_manager != nullptr) {
         const auto enemy_context_list = character_manager->call<API::ManagedObject*>("get_EnemyContextList()", ctx, character_manager);
+        const auto player_manager = character_manager->call<API::ManagedObject*>("get_PlayerManager()", ctx, character_manager);
+        const auto companion_distance = player_manager != nullptr ? player_manager->call<float>("get_WwisePlayerDistance()", ctx, player_manager) : 0.0f;
+        ImGui::LabelText("Companion Distance", "%0.2f", companion_distance);
         if (enemy_context_list != nullptr) {
             const auto num_enemies = enemy_context_list->call<uint32_t>("get_Count()", ctx, enemy_context_list);
             ImGui::LabelText("Potential Number of Enemies", "%u", num_enemies);

@@ -8,7 +8,7 @@
 #include <format>
 #include <reframework/API.hpp>
 
-inline std::string game_namespace(std::string_view base_name) {
+static inline std::string game_namespace(std::string_view base_name) {
     return std::string{"chainsaw."} + base_name.data();
 }
 
