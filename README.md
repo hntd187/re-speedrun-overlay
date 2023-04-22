@@ -6,12 +6,13 @@ to speed runners of Resident Evil 4 remake.
 Currently, the plugin provides
 1. In game time
 2. Game Rank (DA)
-3. Money (Spinels and Pesetas)
-4. Nearby enemies and their health bars (Enemies are sorted by their current health value, the highest first)
-5. Current Chapter Kill Count
-6. Font Size scaling
-7. Only display boss health bars
-8. Only display X number of enemy health bars
+3. Pesetas
+4. Spinels
+5. Nearby enemies and their health bars (Enemies are sorted by their current health value, the highest first)
+6. Current Chapter Kill Count
+7. Font Size scaling
+8. Only display boss health bars
+9. Only display X number of enemy health bars
 
 ### Installation
 1. Install the [reframework](https://github.com/praydog/REFramework#installation)

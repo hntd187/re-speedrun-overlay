@@ -27,6 +27,8 @@ public:
 
     static void draw_money();
 
+    static void draw_spinels();
+
     static void draw_kills();
 
     bool settings_open{true};
@@ -70,6 +72,7 @@ public:
         in_game_time->config_load(cfg);
         game_rank->config_load(cfg);
         money->config_load(cfg);
+        spinels->config_load(cfg);
         local_enemies->config_load(cfg);
         kill_count->config_load(cfg);
         font_size->config_load(cfg);
@@ -86,6 +89,7 @@ public:
         in_game_time->config_save(cfg);
         game_rank->config_save(cfg);
         money->config_save(cfg);
+        spinels->config_save(cfg);
         local_enemies->config_save(cfg);
         kill_count->config_save(cfg);
         font_size->config_save(cfg);
@@ -121,10 +125,10 @@ public:
     }
 
 private:
-    constexpr static const int COLUMNS = 5;
-    constexpr static const char* INFO_LABELS[COLUMNS] = {"IGT", "Money", "Rank", "Kill Count", "Enemies"};
+    constexpr static const int COLUMNS = 6;
+    constexpr static const char* INFO_LABELS[COLUMNS] = {"IGT", "Money", "Spinels", "Rank", "Kill Count", "Enemies"};
 
-    int info_order[COLUMNS] = {1, 2, 3, 4, 5};
+    int info_order[COLUMNS] = {1, 2, 3, 4, 5, 6};
 
     static int window_flags(const bool locked) {
         auto base_flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoBringToFrontOnFocus |
@@ -139,6 +143,7 @@ private:
     const ModToggle::Ptr in_game_time{ModToggle::create(generate_name("In Game Time"), true)};
     const ModToggle::Ptr game_rank{ModToggle::create(generate_name("Rank"), true)};
     const ModToggle::Ptr money{ModToggle::create(generate_name("Money"), true)};
+    const ModToggle::Ptr spinels{ModToggle::create(generate_name("Spinels"), true)};
     const ModToggle::Ptr local_enemies{ModToggle::create(generate_name("Local Enemies"), true)};
     const ModToggle::Ptr kill_count{ModToggle::create(generate_name("Kill Count"), true)};
     const ModToggle::Ptr boss_only{ModToggle::create(generate_name("Boss Health Only"), true)};

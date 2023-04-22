@@ -31,6 +31,7 @@ void Speedrun::on_draw_ui() {
     in_game_time->draw("In Game Time");
     game_rank->draw("Game Rank");
     money->draw("Money");
+    spinels->draw("Spinels");
     local_enemies->draw("Nearby Enemies");
     kill_count->draw("Kill Count");
     boss_only->draw("Boss Health Only");
@@ -102,23 +103,28 @@ void Speedrun::draw_stats() {
             }
             continue;
         case 3:
+            if (spinels->value()) {
+                draw_spinels();
+            }
+            continue;
+        case 4:
             if (game_rank->value()) {
                 draw_game_rank();
             }
             continue;
-        case 4:
+        case 5:
             if (kill_count->value()) {
                 draw_kills();
             }
             continue;
-        case 5:
+        case 6:
             if (local_enemies->value()) {
                 draw_enemies(num_display->value(), boss_only->value());
             }
             continue;
         default:
-            reframework::API::get()->log_info("Done 5");
-            if (enabled->value() && !in_game_time->value() && !money->value() && !game_rank->value() && !local_enemies->value()) {
+            reframework::API::get()->log_info("Done 6");
+            if (enabled->value() && !in_game_time->value() && !money->value() && !spinels->value() && !game_rank->value() && !local_enemies->value()) {
                 ImGui::Text("You disabled everything, but left the overlay enabled.");
             }
             continue;
@@ -132,12 +138,15 @@ void Speedrun::draw_stats() {
 
 void Speedrun::draw_money() {
     const auto inventory_manager = API::get()->get_managed_singleton(game_namespace("InventoryManager"));
-    const auto ingame_shop_manager = API::get()->get_managed_singleton(game_namespace("InGameShopManager"));
     const auto ptas = inventory_manager->get_field<uint32_t>("<CurrPTAS>k__BackingField");
-    const auto spinels = ingame_shop_manager->get_field<uint32_t>("<CurrSpinelCount>k__BackingField");
     if (ptas != nullptr) {
         ImGui::LabelText("Current Pesetas", "%u", *ptas);
     }
+}
+
+void Speedrun::draw_spinels() {
+    const auto ingame_shop_manager = API::get()->get_managed_singleton(game_namespace("InGameShopManager"));
+    const auto spinels = ingame_shop_manager->get_field<uint32_t>("<CurrSpinelCount>k__BackingField");
     if (spinels != nullptr) {
         ImGui::LabelText("Current Spinels", "%u", *spinels);
     }
