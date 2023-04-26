@@ -34,6 +34,7 @@ void Speedrun::on_draw_ui() {
     spinels->draw("Spinels");
     local_enemies->draw("Nearby Enemies");
     kill_count->draw("Kill Count");
+    companion->draw("Companion Distance");
     boss_only->draw("Boss Health Only");
 
     if (!boss_only->value()) {
@@ -118,13 +119,19 @@ void Speedrun::draw_stats() {
             }
             continue;
         case 6:
+            if (companion->value()) {
+                draw_companion();
+            }
+            continue;
+        case 7:
             if (local_enemies->value()) {
                 draw_enemies(num_display->value(), boss_only->value());
             }
             continue;
         default:
-            reframework::API::get()->log_info("Done 6");
-            if (enabled->value() && !in_game_time->value() && !money->value() && !spinels->value() && !game_rank->value() && !local_enemies->value()) {
+            reframework::API::get()->log_info("Done 7");
+            if (enabled->value() && !in_game_time->value() && !money->value() && !spinels->value() &&
+                    !game_rank->value() && !companion->value() && !local_enemies->value()) {
                 ImGui::Text("You disabled everything, but left the overlay enabled.");
             }
             continue;
@@ -200,6 +207,16 @@ void Speedrun::draw_game_rank() {
     }
 }
 
+void Speedrun::draw_companion() {
+    const auto ctx = API::get()->get_vm_context();
+    const auto character_manager = API::get()->get_managed_singleton(game_namespace("CharacterManager"));
+    if (character_manager != nullptr) {
+        const auto player_manager = character_manager->call<API::ManagedObject*>("get_PlayerManager()", ctx, character_manager);
+        const auto companion_distance = player_manager != nullptr ? player_manager->call<float>("get_WwisePlayerDistance()", ctx, player_manager) : 0.0f;
+        ImGui::LabelText("Companion Distance", "%0.2f", companion_distance);
+    }
+}
+
 inline auto compare_tuples = [](auto const& t1, auto const& t2) { return std::get<1>(t1) > std::get<1>(t2); };
 
 void Speedrun::draw_enemies(const int num_to_display, const bool boss_only) {
@@ -207,9 +224,6 @@ void Speedrun::draw_enemies(const int num_to_display, const bool boss_only) {
     const auto character_manager = API::get()->get_managed_singleton(game_namespace("CharacterManager"));
     if (character_manager != nullptr) {
         const auto enemy_context_list = character_manager->call<API::ManagedObject*>("get_EnemyContextList()", ctx, character_manager);
-        const auto player_manager = character_manager->call<API::ManagedObject*>("get_PlayerManager()", ctx, character_manager);
-        const auto companion_distance = player_manager != nullptr ? player_manager->call<float>("get_WwisePlayerDistance()", ctx, player_manager) : 0.0f;
-        ImGui::LabelText("Companion Distance", "%0.2f", companion_distance);
         if (enemy_context_list != nullptr) {
             const auto num_enemies = enemy_context_list->call<uint32_t>("get_Count()", ctx, enemy_context_list);
             ImGui::LabelText("Potential Number of Enemies", "%u", num_enemies);

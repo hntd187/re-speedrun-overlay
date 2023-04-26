@@ -10,9 +10,10 @@ Currently, the plugin provides
 4. Spinels
 5. Nearby enemies and their health bars (Enemies are sorted by their current health value, the highest first)
 6. Current Chapter Kill Count
-7. Font Size scaling
-8. Only display boss health bars
-9. Only display X number of enemy health bars
+7. Distance between your character and your companion
+8. Font Size scaling
+9. Only display boss health bars
+10. Only display X number of enemy health bars
 
 ### Installation
 1. Install the [reframework](https://github.com/praydog/REFramework#installation)

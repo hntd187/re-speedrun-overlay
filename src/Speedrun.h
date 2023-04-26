@@ -31,6 +31,8 @@ public:
 
     static void draw_kills();
 
+    static void draw_companion();
+
     bool settings_open{true};
     float internal_font_size = 16.0;
     bool m_wants_device_object_cleanup{false};
@@ -75,6 +77,7 @@ public:
         spinels->config_load(cfg);
         local_enemies->config_load(cfg);
         kill_count->config_load(cfg);
+        companion->config_load(cfg);
         font_size->config_load(cfg);
         if (font_size->value() != internal_font_size) {
             internal_font_size = font_size->value();
@@ -92,6 +95,7 @@ public:
         spinels->config_save(cfg);
         local_enemies->config_save(cfg);
         kill_count->config_save(cfg);
+        companion->config_save(cfg);
         font_size->config_save(cfg);
         num_display->config_save(cfg);
         boss_only->config_save(cfg);
@@ -125,10 +129,10 @@ public:
     }
 
 private:
-    constexpr static const int COLUMNS = 6;
-    constexpr static const char* INFO_LABELS[COLUMNS] = {"IGT", "Money", "Spinels", "Rank", "Kill Count", "Enemies"};
+    constexpr static const int COLUMNS = 7;
+    constexpr static const char* INFO_LABELS[COLUMNS] = {"IGT", "Money", "Spinels", "Rank", "Kill Count", "Companion", "Enemies"};
 
-    int info_order[COLUMNS] = {1, 2, 3, 4, 5, 6};
+    int info_order[COLUMNS] = {1, 2, 3, 4, 5, 6, 7};
 
     static int window_flags(const bool locked) {
         auto base_flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoBringToFrontOnFocus |
@@ -146,6 +150,7 @@ private:
     const ModToggle::Ptr spinels{ModToggle::create(generate_name("Spinels"), true)};
     const ModToggle::Ptr local_enemies{ModToggle::create(generate_name("Local Enemies"), true)};
     const ModToggle::Ptr kill_count{ModToggle::create(generate_name("Kill Count"), true)};
+    const ModToggle::Ptr companion{ModToggle::create(generate_name("Companion Distance"), true)};
     const ModToggle::Ptr boss_only{ModToggle::create(generate_name("Boss Health Only"), true)};
     const ModInt32::Ptr num_display{ModInt32::create(generate_name("Number of Enemies to Display"), 0)};
     const ModFloat::Ptr font_size{ModFloat::create(generate_name("Font Size"), 16.0)};
