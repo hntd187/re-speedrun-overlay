@@ -21,7 +21,7 @@ public:
 
     static void draw_ingame_time();
 
-    static void draw_game_rank();
+    static void draw_game_rank(bool show_points);
 
     static void draw_enemies(int num_to_display, bool boss_only);
 
@@ -73,6 +73,7 @@ public:
         enabled->config_load(cfg);
         in_game_time->config_load(cfg);
         game_rank->config_load(cfg);
+        points->config_load(cfg);
         money->config_load(cfg);
         spinels->config_load(cfg);
         local_enemies->config_load(cfg);
@@ -91,6 +92,7 @@ public:
         enabled->config_save(cfg);
         in_game_time->config_save(cfg);
         game_rank->config_save(cfg);
+        points->config_save(cfg);
         money->config_save(cfg);
         spinels->config_save(cfg);
         local_enemies->config_save(cfg);
@@ -146,6 +148,7 @@ private:
     const ModToggle::Ptr enabled{ModToggle::create(generate_name("Enabled"), true)};
     const ModToggle::Ptr in_game_time{ModToggle::create(generate_name("In Game Time"), true)};
     const ModToggle::Ptr game_rank{ModToggle::create(generate_name("Rank"), true)};
+    const ModToggle::Ptr points{ModToggle::create(generate_name("Points"), true)};
     const ModToggle::Ptr money{ModToggle::create(generate_name("Money"), true)};
     const ModToggle::Ptr spinels{ModToggle::create(generate_name("Spinels"), true)};
     const ModToggle::Ptr local_enemies{ModToggle::create(generate_name("Local Enemies"), true)};

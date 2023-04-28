@@ -30,14 +30,23 @@ void Speedrun::on_draw_ui() {
     locked->draw("Lock Window");
     in_game_time->draw("In Game Time");
     game_rank->draw("Game Rank");
+
+    if (game_rank->value()) {
+        points->draw("Action and Item Points");
+    }
+
     money->draw("Money");
     spinels->draw("Spinels");
     local_enemies->draw("Nearby Enemies");
+
+    if (local_enemies->value()) {
+        boss_only->draw("Boss Health Only");
+    }
+
     kill_count->draw("Kill Count");
     companion->draw("Companion Distance");
-    boss_only->draw("Boss Health Only");
 
-    if (!boss_only->value()) {
+    if (local_enemies->value() && !boss_only->value()) {
         num_display->draw("Enemies to Display");
         ImGui::Text("Use 0 to display all enemies");
     }
@@ -110,7 +119,7 @@ void Speedrun::draw_stats() {
             continue;
         case 4:
             if (game_rank->value()) {
-                draw_game_rank();
+                draw_game_rank(points->value());
             }
             continue;
         case 5:
@@ -195,15 +204,17 @@ void Speedrun::draw_ingame_time() {
     }
 }
 
-void Speedrun::draw_game_rank() {
+void Speedrun::draw_game_rank(const bool show_points) {
     const auto rank_manager = API::get()->get_managed_singleton(game_namespace("GameRankSystem"));
     if (rank_manager != nullptr) {
         const auto current_rank = rank_manager->get_field<uint32_t>("_GameRank");
-        const auto action_point = rank_manager->get_field<float>("_ActionPoint");
-        const auto item_point = rank_manager->get_field<float>("_ItemPoint");
         ImGui::LabelText("Current Rank", "%i", *current_rank);
-        ImGui::LabelText("Action Point", "%f", *action_point);
-        ImGui::LabelText("Item Point", "%f", *item_point);
+        if (show_points) {
+            const auto action_point = rank_manager->get_field<float>("_ActionPoint");
+            const auto item_point = rank_manager->get_field<float>("_ItemPoint");
+            ImGui::LabelText("Action Points", "%f", *action_point);
+            ImGui::LabelText("Item Points", "%f", *item_point);
+        }
     }
 }
 
